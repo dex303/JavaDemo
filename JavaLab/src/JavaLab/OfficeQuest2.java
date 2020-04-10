@@ -1,54 +1,70 @@
 package JavaLab;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class OfficeQuest2 {
+        static Stapler2 stapler2 = new Stapler2(10);
+        static TapeDispenser2 tapeDispenser2 = new TapeDispenser2(50);
+        static int xPapier, xDostawa;
+
+
     public static void main(String[] args) {
         int licznikRund = 0;
         Random randomDostawa = new Random();
         Random randomArkusze = new Random();
-        String czas;
-        Scanner scanner = new Scanner(System.in);
+        boolean gramy = true;
 
+        while (gramy) {
+            System.out.println("Runda: " + licznikRund);
+            System.out.println("Zszywacz jest " + stapler2.ileZszywek(stapler2));
+            System.out.println("Dozownik taśmy jest " + tapeDispenser2.ileTasmy(tapeDispenser2));
 
-
-
-
-        List<String> listaCzasu = new ArrayList<>();
-        listaCzasu.add("Pozostało 8 godzin, 00 minut");
-        listaCzasu.add("Pozostało 7 godzin, 40 minut");
-        listaCzasu.add("Pozostało 7 godzin, 20 minut");
-        listaCzasu.add("Pozostało 7 godzin, 00 minut");
-        listaCzasu.add("Pozostało 6 godzin, 40 minut");
-        listaCzasu.add("Pozostało 6 godzin, 20 minut");
-        listaCzasu.add("Pozostało 6 godzin, 00 minut");
-        listaCzasu.add("Pozostało 5 godzin, 40 minut");
-        listaCzasu.add("Pozostało 5 godzin, 20 minut");
-        listaCzasu.add("Pozostało 5 godzin, 00 minut");
-        listaCzasu.add("Pozostało 4 godzin, 40 minut");
-        listaCzasu.add("Pozostało 4 godzin, 20 minut");
-        listaCzasu.add("Pozostało 4 godzin, 00 minut");
-        listaCzasu.add("Pozostało 3 godzin, 40 minut");
-        listaCzasu.add("Pozostało 3 godzin, 20 minut");
-        listaCzasu.add("Pozostało 3 godzin, 00 minut");
-        listaCzasu.add("Pozostało 2 godzin, 40 minut");
-        listaCzasu.add("Pozostało 2 godzin, 20 minut");
-        listaCzasu.add("Pozostało 2 godzin, 00 minut");
-        listaCzasu.add("Pozostało 1 godzin, 40 minut");
-        listaCzasu.add("Pozostało 1 godzin, 20 minut");
-        listaCzasu.add("Pozostało 1 godzin, 00 minut");
-        listaCzasu.add("Pozostało 0 godzin, 40 minut");
-        listaCzasu.add("Pozostało 0 godzin, 20 minut");
-        listaCzasu.add("Gratulacje - wygrałeś!");
-
-        for(int i = 0; i < listaCzasu.size(); i++){
-            czas = listaCzasu.get(i);
-            System.out.println(czas);
+            xDostawa = randomDostawa.nextInt(99) + 1;
+            if (xDostawa <= 5) {
+                stapler2.dodajZszywki(10);
+                System.out.println("Dostałeś 10 zszywek.");
+            } else if (xDostawa <= 10) {
+                tapeDispenser2.zmienTasme();
+                System.out.println("Dostałeś nową taśmę.");
+            } else {
+                xPapier = randomArkusze.nextInt(59) + 1;
+                System.out.println("Dostałeś " + xPapier + " arkuszy papieru.");
+                System.out.println("[Z}szyć je czy [s]kleić? Wciśnij klawisz z lub s.");
+                wybor();
+            }
+                Time.timeToGO(licznikRund);
+                System.out.println("........................");
+                if (licznikRund == 24) {
+                    System.exit(0);
+                }
+                licznikRund++;
         }
+    }
 
+    public static void wybor() {
+        String wyborGracza;
+        Scanner scanner = new Scanner(System.in);
+        wyborGracza = scanner.next();
+        if (wyborGracza.equals("Z") || wyborGracza.equals("z")) {
+            if(stapler2.zszywanie(stapler2,xPapier)){
+                System.out.println("Zszyłeś kartki.");
+            }else {
+                System.out.println("Przegrałeś - zabrakło zszywek!)");
+                System.exit(0);
+            }
+        } else if (wyborGracza.equals("S") || wyborGracza.equals("s")) {
+            if(tapeDispenser2.klejenie(tapeDispenser2,xPapier)){
+                System.out.println("Skleiłeś kartki");
+            }else {
+                System.out.println("Przegrałeś - zabrakło taśmy!)");
+                System.exit(0);
+            }
+        } else {
+            System.out.println("Wybrano niepoprawny klawisz.");
+                System.out.println("[Z}szyć je czy [s]kleić? Wciśnij klawisz z lub s.");
+                wybor();
+        }
     }
 }

@@ -7,6 +7,10 @@ public class Stapler2 {
         zszywki = iloscZszywek;
     }
 
+    public Stapler2(){
+
+    }
+
     public String ileZszywek(Stapler2 Stapler2){
         if(zszywki == 0){
             return "pusty.";
@@ -40,7 +44,7 @@ public class Stapler2 {
         }
     }
 
-    public void dodajZszywki(){
-        zszywki += 10;
+    public void dodajZszywki(int x){
+        zszywki += x;
     }
 }
